@@ -17,8 +17,9 @@ class todo extends StatefulWidget {
 class _todoState extends State<todo> {
 
   late String formatDate;
-  TextEditingController todo = new TextEditingController();
-  TextEditingController description = new TextEditingController();
+  late String id;
+  TextEditingController todoController = new TextEditingController();
+  TextEditingController descriptionController = new TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -76,7 +77,7 @@ class _todoState extends State<todo> {
                 ],
               ),
               child: TextField(
-                controller: todo,
+                controller: todoController,
                 decoration: InputDecoration(border: InputBorder.none),
               ),
             ),
@@ -125,10 +126,11 @@ class _todoState extends State<todo> {
               ),
               child: TextField(
                 maxLines: 2,
-                controller: description,
+                controller: descriptionController,
                 decoration: InputDecoration(
                     border: InputBorder.none,
-                    contentPadding: EdgeInsets.all(20.0)),
+                    // contentPadding: EdgeInsets.all(20.0)
+                ),
               ),
             ),
 
@@ -143,11 +145,15 @@ class _todoState extends State<todo> {
               ),
             ),
 
+            SizedBox(
+              height: 10.0,
+            ),
+
             Container(
               child: WeeklyCalendar(
                 calendarStyle: CalendarStyle(
                   locale: "en_US",
-                  margin: EdgeInsets.all(10),
+                  margin: EdgeInsets.all(1),
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.all(Radius.circular(14)),
@@ -166,17 +172,20 @@ class _todoState extends State<todo> {
                   formatDate = DateFormat('yyyy-mm-dd').format(date);
                 },
               ),
-            ), // Displays the weekly calender
+            ),
+            // Displays the weekly calender
+
+            SizedBox(height: 10.0,),
 
             Container(
               margin: EdgeInsets.all(10),
               child: Center(
                 child: ElevatedButton(
                     onPressed: () async {
-                      String id = randomAlphaNumeric(10);
+                      id = randomAlphaNumeric(10);
                       Map<String, dynamic> todoInfoMap = {
-                        "Todo": todo.text,
-                        "Description": description.text,
+                        "Todo": todoController.text,
+                        "Description": descriptionController.text,
                         "id": id,
                         "date": formatDate
                       };

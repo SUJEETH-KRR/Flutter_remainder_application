@@ -17,4 +17,13 @@ class DatabaseMethods {
   // This function is used to get the ToDo details from the collection
   // Here Stream is used to get the details from DB and QuerySnapshot is used to query all the details(documents) in the DB
 
+  Future updateTodoDetails(String id, Map<String, dynamic> updateToDoInfo) async {
+    return await FirebaseFirestore.instance.collection('ToDo').doc(id).update(updateToDoInfo);
+  }
+  // This function is used to update the details of existing record
+  // This function using the id to search for the record and uses the map to update the details.
+
+  // Future deleteTodoDetails(String id) async {
+  //   return await FirebaseFirestore.instance.collection('ToDo').doc(id).delete();
+  // }
 }

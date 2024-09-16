@@ -1,8 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 import 'package:remainder_application/pages/todo.dart';
 import 'package:remainder_application/service/database.dart';
+import 'package:weekly_calendar/weekly_calendar.dart';
+import 'package:remainder_application/pages/edit.dart';
 
 class homepage extends StatefulWidget {
   const homepage({Key? key}) : super(key: key);
@@ -36,6 +39,8 @@ class _homepageState extends State<homepage> {
           itemCount: snapshot.data.docs.length, // First need to check how many data is present
           itemBuilder: (context, index) {
             DocumentSnapshot ds = snapshot.data.docs[index];
+            String id = ds.id;
+
             return Material(
               elevation: 5.0,
               borderRadius: BorderRadius.circular(10.0),
@@ -57,21 +62,48 @@ class _homepageState extends State<homepage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      ds["Todo"],
-                      style: GoogleFonts.padauk(
-                          color: Colors.blueGrey[700],
-                          fontWeight: FontWeight.w900,
-                          fontSize: 22.0
-                      ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          ds["Todo"],
+                          style: GoogleFonts.padauk(
+                              color: Colors.blueGrey[700],
+                              fontWeight: FontWeight.w900,
+                              fontSize: 22.0
+                          ),
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                                context, MaterialPageRoute(builder: (context) => edit(id: id)));
+                          },
+                          child: Icon(
+                            Icons.edit,
+                            color: Colors.blueGrey[700],
+                          ),
+                        )
+                      ],
                     ),
-                    Text(
-                      ds["Description"],
-                      style: GoogleFonts.padauk(
-                          color: Colors.black,
-                          fontSize: 15.0
-                      ),
-                    ),
+                    SizedBox(height: 10.0,),
+                    // Row(
+                    //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    //   children: [
+                    //     Text(
+                    //       ds["Description"],
+                    //       style: GoogleFonts.padauk(
+                    //           color: Colors.black,
+                    //           fontSize: 15.0
+                    //       ),
+                    //     ),
+                    //     GestureDetector(
+                    //       onTap: () async {
+                    //         await DatabaseMethods().deleteTodoDetails(id);
+                    //       },
+                    //       child: Icon(Icons.delete, color: Colors.deepOrange,),
+                    //     )
+                    //   ],
+                    // ),
                   ],
                 ),
               ),
@@ -116,6 +148,7 @@ class _homepageState extends State<homepage> {
           ],
         ),
       ),
+
       body: Container(
         margin: EdgeInsets.all(10.0),
         child: Column(
