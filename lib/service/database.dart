@@ -23,7 +23,9 @@ class DatabaseMethods {
   // This function is used to update the details of existing record
   // This function using the id to search for the record and uses the map to update the details.
 
-  // Future deleteTodoDetails(String id) async {
-  //   return await FirebaseFirestore.instance.collection('ToDo').doc(id).delete();
-  // }
+  Future deleteTodoDetails(String id) async {
+    return await FirebaseFirestore.instance.collection('ToDo').doc(id).delete();
+  }
+  // This function is to delete the existing record.
+  // This function deletes the document using the id.
 }

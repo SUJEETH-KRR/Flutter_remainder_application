@@ -169,7 +169,7 @@ class _todoState extends State<todo> {
                 ),
                 isAutoSelect: true,
                 onChangedSelectedDate: (date) {
-                  formatDate = DateFormat('yyyy-mm-dd').format(date);
+                  formatDate = DateFormat('yyyy-MM-dd').format(date);
                 },
               ),
             ),
@@ -189,6 +189,7 @@ class _todoState extends State<todo> {
                         "id": id,
                         "date": formatDate
                       };
+                      debugPrint(formatDate);
                       await DatabaseMethods().addTodoDetails(todoInfoMap, id)
                       .then((value) {
                         showDialog(

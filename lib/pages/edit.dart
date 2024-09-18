@@ -40,10 +40,13 @@ class _editState extends State<edit> {
       if (ds.exists) {
         todoController.text = ds["Todo"] ?? '';
         descriptionController.text = ds['Description'] ?? '';
+        String dateStr = ds['date'] ?? DateFormat('yyyy-MM-dd').format(DateTime.now());
+        DateTime initialDate = DateFormat('yyyy-MM-dd').parse(dateStr);
+        formatDate = dateStr;
       } else {
         return Center(
           child: Container(
-            child: Text("No data fount"),
+            child: Text("No data found"),
           ),
         );
       }
@@ -195,7 +198,7 @@ class _editState extends State<edit> {
                 ),
                 isAutoSelect: true,
                 onChangedSelectedDate: (date) {
-                  formatDate = DateFormat('yyyy-mm-dd').format(date);
+                  formatDate = DateFormat('yyyy-MM-dd').format(date);
                 },
               ),
             ),

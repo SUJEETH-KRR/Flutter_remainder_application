@@ -41,10 +41,16 @@ class _homepageState extends State<homepage> {
             DocumentSnapshot ds = snapshot.data.docs[index];
             String id = ds.id;
 
+            String dbDate = ds["date"];
+            DateTime date = DateFormat('yyyy-MM-dd').parse(dbDate);
+            int day = date.day;
+            int month = date.month;
+
             return Material(
               elevation: 5.0,
               borderRadius: BorderRadius.circular(10.0),
               child: Container(
+                height: 140.0,
                 margin: EdgeInsets.only(bottom: 15.0),
                 padding: EdgeInsets.all(10.0),
                 width: MediaQuery.of(context).size.width,
@@ -65,6 +71,33 @@ class _homepageState extends State<homepage> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
+                        Row(
+                          children: [
+                            Icon(Icons.calendar_month_rounded),
+                            Text(
+                              "$day/$month",
+                              style: GoogleFonts.padauk(
+                                  color: Colors.blueGrey[700],
+                                  fontWeight: FontWeight.w900,
+                                  fontSize: 15.0
+                              ),
+                            ),
+                          ],
+                        ),
+
+                        GestureDetector(
+                          child: Icon(
+                            Icons.alarm,
+                            color: Colors.blueGrey[700],
+                          ),
+                        )
+                      ],
+                    ),
+
+                    SizedBox(height: 5.0,),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
                         Text(
                           ds["Todo"],
                           style: GoogleFonts.padauk(
@@ -73,6 +106,7 @@ class _homepageState extends State<homepage> {
                               fontSize: 22.0
                           ),
                         ),
+
                         GestureDetector(
                           onTap: () {
                             Navigator.push(
@@ -85,25 +119,27 @@ class _homepageState extends State<homepage> {
                         )
                       ],
                     ),
-                    SizedBox(height: 10.0,),
-                    // Row(
-                    //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    //   children: [
-                    //     Text(
-                    //       ds["Description"],
-                    //       style: GoogleFonts.padauk(
-                    //           color: Colors.black,
-                    //           fontSize: 15.0
-                    //       ),
-                    //     ),
-                    //     GestureDetector(
-                    //       onTap: () async {
-                    //         await DatabaseMethods().deleteTodoDetails(id);
-                    //       },
-                    //       child: Icon(Icons.delete, color: Colors.deepOrange,),
-                    //     )
-                    //   ],
-                    // ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                          child: Text(
+                            ds["Description"],
+                            style: GoogleFonts.padauk(
+                                color: Colors.black,
+                                fontSize: 15.0,
+                            ),
+                            softWrap: true,
+                          ),
+                        ),
+                        GestureDetector(
+                          onTap: () async {
+                            await DatabaseMethods().deleteTodoDetails(id);
+                          },
+                          child: Icon(Icons.delete, color: Colors.deepOrange,),
+                        )
+                      ],
+                    ),
                   ],
                 ),
               ),
