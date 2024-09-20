@@ -133,8 +133,77 @@ class _homepageState extends State<homepage> {
                           ),
                         ),
                         GestureDetector(
-                          onTap: () async {
-                            await DatabaseMethods().deleteTodoDetails(id);
+                          onTap: () {
+                            showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return AlertDialog(
+                                    title: Center(
+                                      child: Row(
+                                        children: [
+                                          Icon(Icons.info, color: Colors.blueGrey[700],),
+                                          SizedBox(width: 5.0,),
+                                          Text(
+                                            "Did you completed the task",
+                                            style: GoogleFonts.aBeeZee(
+                                              fontSize: 14.0,
+                                              fontWeight: FontWeight.bold
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    content: Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                      children: [
+                                        ElevatedButton(
+                                            onPressed: () {
+                                              Navigator.of(context).pop();
+                                            },
+                                            style: ElevatedButton.styleFrom(
+                                              backgroundColor: Colors.deepOrange,
+                                            ),
+                                            child: Row(
+                                              children: [
+                                                Icon(Icons.cancel),
+                                                SizedBox(width: 5.0,),
+                                                Text("No",
+                                                  style: GoogleFonts.actor(
+                                                    color: Colors.white,
+                                                      fontWeight: FontWeight.bold,
+                                                      fontSize: 15.0
+                                                  ),
+                                                )
+                                              ],
+                                            )
+                                        ),
+                                        ElevatedButton(
+                                            onPressed: () async {
+                                              await DatabaseMethods().deleteTodoDetails(id);
+                                              Navigator.of(context).pop();
+                                            },
+                                            style: ElevatedButton.styleFrom(
+                                              backgroundColor: Colors.green
+                                            ),
+                                            child: Row(
+                                              children: [
+                                                Icon(Icons.thumb_up_alt_rounded),
+                                                SizedBox(width: 5.0,),
+                                                Text("Yes",
+                                                  style: GoogleFonts.actor(
+                                                      fontWeight: FontWeight.bold,
+                                                      color: Colors.white,
+                                                      fontSize: 15.0
+                                                  ),
+                                                )
+                                              ],
+                                            )
+                                        ),
+                                      ],
+                                    ),
+                                  );
+                                }
+                            );
                           },
                           child: Icon(Icons.delete, color: Colors.deepOrange,),
                         )

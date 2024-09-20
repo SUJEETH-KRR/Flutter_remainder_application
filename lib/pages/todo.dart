@@ -15,11 +15,10 @@ class todo extends StatefulWidget {
 }
 
 class _todoState extends State<todo> {
-
   late String formatDate;
   late String id;
-  TextEditingController todoController = new TextEditingController();
-  TextEditingController descriptionController = new TextEditingController();
+  TextEditingController todoController = TextEditingController();
+  TextEditingController descriptionController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -31,205 +30,194 @@ class _todoState extends State<todo> {
           children: [
             Text(
               "ToDo",
-                style: GoogleFonts.pacifico(
-                    color: Colors.deepOrangeAccent,
-                    fontWeight: FontWeight.w900,
-                    fontSize: 20.0
-                )
+              style: GoogleFonts.pacifico(
+                color: Colors.deepOrangeAccent,
+                fontWeight: FontWeight.w900,
+                fontSize: 20.0,
+              ),
             ),
-            Text(" Plan",
+            Text(
+              " Plan",
               style: GoogleFonts.ibmPlexSansArabic(
-                  color: Colors.white,
-                  fontWeight: FontWeight.w700
+                color: Colors.white,
+                fontWeight: FontWeight.w700,
               ),
             ),
           ],
         ),
       ),
-      body: Container(
-        margin: EdgeInsets.only(left: 20, top: 20, right: 20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              "What is your plan",
-              style: GoogleFonts.poppins(
-                fontSize: 20,
+      body: SingleChildScrollView( // Wrap in SingleChildScrollView
+        child: Container(
+          margin: EdgeInsets.all(20),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "What is your plan",
+                style: GoogleFonts.poppins(fontSize: 20),
               ),
-            ),
+              SizedBox(height: 10.0),
 
-            SizedBox(
-              height: 10.0,
-            ),
-            // For Space between the content and text field
-            Container(
-              padding: EdgeInsets.only(left: 10, right: 10),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(7),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.5),
-                    spreadRadius: 5,
-                    blurRadius: 8,
-                    offset: Offset(0, 5),
-                  ), // Box shadow for the textfield
-                ],
+              // TextField for todo
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: 10),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(7),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.5),
+                      spreadRadius: 5,
+                      blurRadius: 8,
+                      offset: Offset(0, 5),
+                    ),
+                  ],
+                ),
+                child: TextField(
+                  controller: todoController,
+                  decoration: InputDecoration(border: InputBorder.none),
+                ),
               ),
-              child: TextField(
-                controller: todoController,
-                decoration: InputDecoration(border: InputBorder.none),
-              ),
-            ),
+              SizedBox(height: 25),
 
-            SizedBox(
-              height: 25,
-            ),
-
-            Container(
-              child: Row(
+              // Description row
+              Row(
                 children: [
                   Text(
                     "Description",
-                    style: GoogleFonts.poppins(
-                      fontSize: 20,
-                    ),
+                    style: GoogleFonts.poppins(fontSize: 20),
                   ),
                   Text(
                     " (optional)",
                     style: TextStyle(
-                        fontSize: 15,
-                        fontStyle: FontStyle.italic,
-                        color: Colors.grey),
-                  )
-                ],
-              ),
-            ), // For TextField
-
-            SizedBox(
-              height: 10.0,
-            ),
-
-            Container(
-              padding: EdgeInsets.only(left: 10, right: 10),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(7),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.5),
-                    spreadRadius: 5,
-                    blurRadius: 8,
-                    offset: Offset(0, 5),
-                  ), // Box shadow for the textfield
-                ],
-              ),
-              child: TextField(
-                maxLines: 2,
-                controller: descriptionController,
-                decoration: InputDecoration(
-                    border: InputBorder.none,
-                    // contentPadding: EdgeInsets.all(20.0)
-                ),
-              ),
-            ),
-
-            SizedBox(
-              height: 30,
-            ),
-
-            Text(
-              "Calender",
-              style: GoogleFonts.poppins(
-                fontSize: 20,
-              ),
-            ),
-
-            SizedBox(
-              height: 10.0,
-            ),
-
-            Container(
-              child: WeeklyCalendar(
-                calendarStyle: CalendarStyle(
-                  locale: "en_US",
-                  margin: EdgeInsets.all(1),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.all(Radius.circular(14)),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withOpacity(0.5),
-                        spreadRadius: 5,
-                        blurRadius: 8,
-                        offset: Offset(0, 5),
-                      )
-                    ]
+                      fontSize: 15,
+                      fontStyle: FontStyle.italic,
+                      color: Colors.grey,
+                    ),
                   ),
-                ),
-                isAutoSelect: true,
-                onChangedSelectedDate: (date) {
-                  formatDate = DateFormat('yyyy-MM-dd').format(date);
-                },
+                ],
               ),
-            ),
-            // Displays the weekly calender
+              SizedBox(height: 10.0),
 
-            SizedBox(height: 10.0,),
+              // TextField for description
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: 10),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(7),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.5),
+                      spreadRadius: 5,
+                      blurRadius: 8,
+                      offset: Offset(0, 5),
+                    ),
+                  ],
+                ),
+                child: TextField(
+                  maxLines: 2,
+                  controller: descriptionController,
+                  decoration: InputDecoration(border: InputBorder.none),
+                ),
+              ),
+              SizedBox(height: 30),
 
-            Container(
-              margin: EdgeInsets.all(10),
-              child: Center(
-                child: ElevatedButton(
+              // Calendar
+              Text(
+                "Calendar",
+                style: GoogleFonts.poppins(fontSize: 20),
+              ),
+              SizedBox(height: 10.0),
+
+              // WeeklyCalendar
+              SizedBox(
+                height: 150, // Set a fixed height
+                child: WeeklyCalendar(
+                  calendarStyle: CalendarStyle(
+                    locale: "en_US",
+                    margin: EdgeInsets.all(1),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.all(Radius.circular(14)),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.5),
+                          spreadRadius: 5,
+                          blurRadius: 8,
+                          offset: Offset(0, 5),
+                        ),
+                      ],
+                    ),
+                  ),
+                  isAutoSelect: true,
+                  onChangedSelectedDate: (date) {
+                    formatDate = DateFormat('yyyy-MM-dd').format(date);
+                  },
+                ),
+              ),
+              SizedBox(height: 10.0),
+
+
+
+              SizedBox(height: 10.0,),
+
+              // Add button
+              Container(
+                margin: EdgeInsets.all(10),
+                child: Center(
+                  child: ElevatedButton(
                     onPressed: () async {
                       id = randomAlphaNumeric(10);
                       Map<String, dynamic> todoInfoMap = {
                         "Todo": todoController.text,
                         "Description": descriptionController.text,
                         "id": id,
-                        "date": formatDate
+                        "date": formatDate,
                       };
                       debugPrint(formatDate);
                       await DatabaseMethods().addTodoDetails(todoInfoMap, id)
-                      .then((value) {
+                          .then((value) {
                         showDialog(
                           context: context,
                           builder: (BuildContext context) {
                             return AlertDialog(
-                                backgroundColor: Colors.blueGrey[700],
-                                content: SingleChildScrollView(
-                                  child: ListBody(
-                                    children: [
-                                      Column(
-                                        mainAxisAlignment: MainAxisAlignment.center,
+                              backgroundColor: Colors.blueGrey[700],
+                              content: SingleChildScrollView(
+                                child: ListBody(
+                                  children: [
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        Icon(Icons.check, color: Colors.white),
+                                        SizedBox(width: 10),
+                                        Text(
+                                          "Added Successfully",
+                                          style: TextStyle(color: Colors.white),
+                                        ),
+                                      ],
+                                    ),
+                                    Center(
+                                      child: Row(
+                                        mainAxisSize: MainAxisSize.min,
                                         children: [
-                                          Row(
-                                            mainAxisAlignment: MainAxisAlignment.center,
-                                            children: [
-                                              Icon(Icons.check, color: Colors.white,),
-                                              SizedBox(width: 10,),
-                                              Text(
-                                                "Added Successfully",
-                                                style: TextStyle(
-                                                    color: Colors.white
-                                                ),
-                                              ),
-                                            ],
-                                          ),
                                           ElevatedButton(
-                                              onPressed: () {
-                                                Navigator.of(context).pop();
-                                                Navigator.push(context, MaterialPageRoute(builder: (context) => homepage()));
-                                              },
-                                              child: Text("Ok")
+                                            onPressed: () {
+                                              Navigator.pushAndRemoveUntil(
+                                                context,
+                                                MaterialPageRoute(builder: (context) => homepage()),
+                                                  (Route<dynamic> Route) => false
+                                              );
+                                            },
+                                            child: Text("Ok"),
                                           ),
                                         ],
-                                      )
-                                    ],
-                                  ),
-                                )
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
                             );
-                          }
+                          },
                         );
                       });
                     },
@@ -238,15 +226,14 @@ class _todoState extends State<todo> {
                       padding: EdgeInsets.symmetric(horizontal: 40, vertical: 20),
                     ),
                     child: Text(
-                        "Add",
-                        style: GoogleFonts.alice(
-                            color: Colors.white
-                        ),
-                    )
+                      "Add",
+                      style: GoogleFonts.alice(color: Colors.white),
+                    ),
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

@@ -28,6 +28,7 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
+#  alarm: ^3.1.7
   firebase_core: ^3.4.1
   cloud_firestore: ^5.4.1
   weekly_calendar: ^0.1.2
