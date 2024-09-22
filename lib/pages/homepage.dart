@@ -85,11 +85,23 @@ class _homepageState extends State<homepage> {
                           ],
                         ),
 
-                        GestureDetector(
-                          child: Icon(
-                            Icons.alarm,
-                            color: Colors.blueGrey[700],
-                          ),
+                        Row(
+                          children: [
+                            GestureDetector(
+                              child: Icon(
+                                Icons.alarm,
+                                color: Colors.blueGrey[700],
+                              ),
+                            ),
+                            Text(
+                              ds["time"],
+                              style: GoogleFonts.padauk(
+                                  color: Colors.blueGrey[700],
+                                  fontWeight: FontWeight.w900,
+                                  fontSize: 15.0
+                              ),
+                            )
+                          ],
                         )
                       ],
                     ),

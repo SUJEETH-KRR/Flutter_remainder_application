@@ -15,10 +15,11 @@ class todo extends StatefulWidget {
 }
 
 class _todoState extends State<todo> {
-  late String formatDate;
+  late String formatDate, formatTime;
   late String id;
   TextEditingController todoController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
+  TimeOfDay selectedTime = TimeOfDay.now();
 
   @override
   Widget build(BuildContext context) {
@@ -155,9 +156,42 @@ class _todoState extends State<todo> {
                   },
                 ),
               ),
-              SizedBox(height: 10.0),
+              SizedBox(height: 30.0),
 
-
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text("Time", style: GoogleFonts.poppins(fontSize: 20),),
+                  Text(
+                      "${selectedTime.hour > 12
+                          ? selectedTime.hour-12
+                          :
+                      selectedTime.hour}"
+                          ":"
+                          "${selectedTime.minute} "
+                          "${selectedTime.hour > 12 ? "PM" : "AM"}"
+                  ),
+                  ElevatedButton(
+                      onPressed: () async {
+                        final TimeOfDay? time = await showTimePicker(
+                          context: context,
+                          initialTime: selectedTime,
+                          initialEntryMode: TimePickerEntryMode.dial
+                        );
+                        if(time != null) {
+                          setState(() {
+                            selectedTime = time;
+                            int hour = selectedTime.hour>12 ? selectedTime.hour-12 : selectedTime.hour;
+                            int minute = selectedTime.minute;
+                            String am_pm = selectedTime.hour>12 ? "PM" : "AM";
+                            formatTime = '${hour.toString()}:${minute.toString()} ${am_pm}';
+                          });
+                        }
+                      },
+                      child: Text("Select time"),
+                  )
+                ],
+              ),
 
               SizedBox(height: 10.0,),
 
@@ -173,6 +207,7 @@ class _todoState extends State<todo> {
                         "Description": descriptionController.text,
                         "id": id,
                         "date": formatDate,
+                        "time": formatTime,
                       };
                       debugPrint(formatDate);
                       await DatabaseMethods().addTodoDetails(todoInfoMap, id)
